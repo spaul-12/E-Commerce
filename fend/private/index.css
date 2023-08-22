@@ -1,0 +1,81 @@
+body {
+    transition: all 0.2s;
+}
+
+.NavigationBarFirst div {
+    display: inline-block;
+}
+
+.logo img {
+    width: 60%;
+}
+
+.menuOptions i {
+    font-size: 1.7em;
+    color: blue;
+    cursor: pointer;
+}
+
+.NavigationBarSecond {
+    background-color: rgb(111, 0, 255);
+}
+
+.nav_links{
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.1em;
+    color: rgb(251, 230, 230);
+    transition: all 0.5s;
+}
+
+
+
+#side_nav {
+    height: 100vh;
+    width: 0;
+    background-color: rgba(0, 0, 0, 0.836);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    overflow-x: hidden;
+    transition: 0.5s;
+    transition: all 0.5s;
+}
+
+#side_nav div a {
+    text-decoration: none;
+    color: rgb(255, 189, 65);
+    transition: all 0.2s;
+    display: block;
+}
+
+#side_nav a:hover {
+    color: rgb(255, 251, 0);
+    background-color: rgb(126, 128, 127);
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 40%;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    padding: 2px 16px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: max-content;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+
+    <style>
+    .container-fluid{
+         height: 100vh;
+         background-image: url('img.jpg');
+         background-repeat: no-repeat;
+         background-size: cover;
+      /* border: 2px solid red; */
+         backdrop-filter: blur(5px);
+    }
+   .loginForm{
+         height: max-content;   
+         border: 2px solid rgb(0, 255, 85);
+         width: 50vh;
+         border-radius: 15px;
+        backdrop-filter: blur(5px);
+    }
+
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid d-flex align-items-center justify-content-center">
+        <div class="loginForm">
+            <p class="text-center display-6 text-white mt-4">Sign Up</p>
+            <form action="/api/user/signup" method="post">
+                <!-- email  -->
+                <div class="mb-3 mx-4">
+                    <label for="email" class="form-label"></label>
+                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelpId"
+                        placeholder="Enter Your Email" required> 
+                </div>
+                <!--userid-->
+                <div class="mb-3 mx-4">
+                    <label for="userid" class="form-label"></label>
+                    <input type="userid" class="form-control" name="userid" id="userid" aria-describedby="emailHelpId"
+                        placeholder="Enter Your Username" required>
+                </div>
+                <div class="email error" style="color: cadetblue; padding: 2px;" ></div>
+                <!-- password  -->
+                <div class="mb-3 mx-4">
+                    <label for="password" class="form-label"></label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <div class="password error" style="color: cadetblue; padding: 2px;"></div>
+                <p class="text-center my-5"><button type="submit" id="submit" class="btn btn-outline-warning">Submit</button></p>
+            </form>
+
+
+
+            <!-- <p class="text-center text-white h5 my-3"><span>Don't Have a Account? </span><span><a href="register" -->
+                        <!-- style="text-decoration: none;color: rgb(217, 255, 0);"> Register </a></span></p> -->
+        </div>
+
+
+    </div>
+    <script>
+        const form = document.querySelector('form')
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            const username = form.userid.value
+            const password = form.password.value
+            const email = form.email.value
+            try {
+                const res = await fetch('/api/user/signup', {
+                    method: 'POST',
+                    redirect: "follow",
+                    body: JSON.stringify({
+                        email: email,
+                        username: username,
+                        password: password
+                    }),
+                    headers: {
+                        'Content-Type':'application/json'
+                    }
+                })
+                const data = await res.json()
+                console.log(data)
+                if(data.error)
+                {
+                    if(data.username.length)
+                      alert(data.username)
+                    else if(data.email.length)
+                      alert(data.email)
+                    else 
+                      alert(data.password)
+                }else{
+                    alert("Sign up successfull.")
+                    window.location.href = "signin.html"
+                }
+                
+            } catch (e) {
+               console.log(e) 
+            }
+        })
+    </script>
+</body>
+
+</html>
