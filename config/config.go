@@ -9,7 +9,7 @@ import (
 
 func Config(key string) string {
 
-	err := godotenv.Load("tsk.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		fmt.Print("error loading .env file")
 	}

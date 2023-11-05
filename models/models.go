@@ -52,7 +52,7 @@ func (base *Base) AfterUpdate(tx *gorm.DB) error {
 type BookStock struct {
 	Bookid   uint32
 	Bookname string
-	Catagory pq.StringArray `gorm:"type:text[]"`
+	Category pq.StringArray `gorm:"type:text[]"`
 	Quantity uint32
 	Price    uint64
 }

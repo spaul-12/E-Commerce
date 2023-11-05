@@ -28,7 +28,7 @@ import (
 
 var jwtKey = []byte("key")
 
-//variables required for google authentication
+// variables required for google authentication
 var (
 	googleOauthConfig = &oauth2.Config{
 		RedirectURL:  "http://localhost:8000/api/user/googlecallback",
@@ -140,7 +140,7 @@ func LoginUser(c *fiber.Ctx) error {
 
 }
 
-//this function logs out a user and reset the accesscookie to nil
+// this function logs out a user and reset the accesscookie to nil
 func Logout(c *fiber.Ctx) error {
 	c.ClearCookie()
 
@@ -208,7 +208,7 @@ func GetAccessToken(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{"access_token": accessToken})
 }
 
-//funtion to get bookstock
+// funtion to get bookstock
 func GetBookStock(c *fiber.Ctx) error {
 	type Bookdata struct {
 		Bookid   uint32
@@ -219,7 +219,7 @@ func GetBookStock(c *fiber.Ctx) error {
 
 	var Books []Bookdata
 	var Book Bookdata
-	var Catagories []string
+	var Categories []string
 	catlist := make(map[string]bool)
 	var book models.BookStock
 
@@ -231,7 +231,7 @@ func GetBookStock(c *fiber.Ctx) error {
 		Book.Bookname = book.Bookname
 		Book.Quantity = book.Quantity
 		Book.Price = book.Price
-		for _, e := range book.Catagory {
+		for _, e := range book.Category {
 			catlist[e] = true
 		}
 		if Book.Quantity > 0 {
@@ -240,7 +240,7 @@ func GetBookStock(c *fiber.Ctx) error {
 	}
 
 	for cat := range catlist {
-		Catagories = append(Catagories, cat)
+		Categories = append(Categories, cat)
 	}
 
 	// fmt.Println(Books)
@@ -248,11 +248,11 @@ func GetBookStock(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"books":      Books,
-		"catagories": Catagories,
+		"catagories": Categories,
 	})
 }
 
-//function for catagory wise sorting
+// function for catagory wise sorting
 func CreateCatagoryCookie(c *fiber.Ctx) error {
 	type catagoryinput struct {
 		Catagory string `json:"catagory"`
@@ -291,7 +291,7 @@ func Getfilteredbooks(c *fiber.Ctx) error {
 	var Books []Bookdata
 	var Book Bookdata
 
-	rows, _ := db.DB.Model(&models.BookStock{}).Select("bookid", "bookname", "quantity", "price").Where("catagory && ?", pq.StringArray(catagory)).Rows()
+	rows, _ := db.DB.Model(&models.BookStock{}).Select("bookid", "bookname", "quantity", "price").Where("category && ?", pq.StringArray(catagory)).Rows()
 	defer rows.Close()
 	for rows.Next() {
 		db.DB.ScanRows(rows, &Book)
@@ -315,13 +315,13 @@ func GetUsername(c *fiber.Ctx) error {
    These functions are required for google login
 */
 
-//function for google login
+// function for google login
 func GoogleLogin(c *fiber.Ctx) error {
 	url := googleOauthConfig.AuthCodeURL(randomstate)
 	return c.Redirect(url)
 }
 
-//function for google callback
+// function for google callback
 func GoogleCallback(c *fiber.Ctx) error {
 
 	if c.FormValue("state") != randomstate {

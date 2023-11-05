@@ -19,7 +19,7 @@ import (
 	"github.com/lib/pq"
 )
 
-//function for entering purchased item details in DB
+// function for entering purchased item details in DB
 func CreateEntry(c *fiber.Ctx) error {
 
 	type iteminput struct {
@@ -87,7 +87,7 @@ func CreateEntry(c *fiber.Ctx) error {
 	})
 }
 
-//function for removing purchased item data
+// function for removing purchased item data
 func DeleteEntry(c *fiber.Ctx) error {
 
 	type iteminput struct {
@@ -144,7 +144,7 @@ func DeleteEntry(c *fiber.Ctx) error {
 	})
 }
 
-//function for adding items to the cart
+// function for adding items to the cart
 func AddtoCart(c *fiber.Ctx) error {
 
 	type iteminput struct {
@@ -217,7 +217,7 @@ func AddtoCart(c *fiber.Ctx) error {
 
 }
 
-//function for removing items from cart
+// function for removing items from cart
 func DeletefromCart(c *fiber.Ctx) error {
 
 	type iteminput struct {
@@ -249,7 +249,7 @@ func DeletefromCart(c *fiber.Ctx) error {
 	})
 }
 
-//function to place cart orders
+// function to place cart orders
 func PlaceCartOrders(c *fiber.Ctx) error {
 	type checkout struct {
 		ShippingAddress string `json:"shippingaddress"`
@@ -313,7 +313,7 @@ func PlaceCartOrders(c *fiber.Ctx) error {
 	})
 }
 
-//function for getting cart data
+// function for getting cart data
 func GetCartData(c *fiber.Ctx) error {
 	type cartdata struct {
 		Bookid     uint32
@@ -353,7 +353,7 @@ func GetCartData(c *fiber.Ctx) error {
 	return c.JSON(cartitems)
 }
 
-//function for getting purchased items data
+// function for getting purchased items data
 func GetPurchaseData(c *fiber.Ctx) error {
 	type purchasedata struct {
 		Bookid     uint32
@@ -414,7 +414,7 @@ func CreateBookCookie(c *fiber.Ctx) error {
 	})
 }
 
-//use cookie value to identify the book
+// use cookie value to identify the book
 func ShowBook(c *fiber.Ctx) error {
 	idstr := c.Cookies("id_of_book_to_be_shown")
 	id, _ := strconv.Atoi(idstr)
@@ -432,7 +432,7 @@ func ShowBook(c *fiber.Ctx) error {
 		return nil
 	}
 
-	rows, err := db.DB.Model(&models.BookStock{}).Select("bookid", "bookname", "price").Where("catagory && ?", pq.StringArray(selectedbook.Catagory)).Rows()
+	rows, err := db.DB.Model(&models.BookStock{}).Select("bookid", "bookname", "price").Where("category && ?", pq.StringArray(selectedbook.Category)).Rows()
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -444,7 +444,7 @@ func ShowBook(c *fiber.Ctx) error {
 			relatedbooks = append(relatedbooks, relatedbook)
 		}
 	}
-
+	fmt.Println(relatedbooks)
 	return c.JSON(fiber.Map{
 		"selectedbook": selectedbook,
 		"relatedbooks": relatedbooks,
@@ -452,7 +452,7 @@ func ShowBook(c *fiber.Ctx) error {
 
 }
 
-//Track Package
+// Track Package
 func TrackPackage(c *fiber.Ctx) error {
 	type iteminput struct {
 		Bookid uint32 `json:"bookid"`
